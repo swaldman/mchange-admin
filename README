@@ -1,0 +1,41 @@
+This package just contains some functions and tools that I have found useful
+over the years in managing unix boxes. It used to also contain machine-specific
+configuration information. That can be found in the historic version of this
+package under mchange-development-unified/bk_reposirories. But it is mostly
+obsolete.
+
+====
+
+The most useful bit of functionality here is the pkgappend bash function, and
+the various functions it loads. To "install", add the following to your
+.bashrc file or to /etc/bashrc, where ${MCHANGE_ADMIN_ROOT} stands for the
+directory where you have found this file.
+
+You will need to define a directory called PKGBASE as well. It will be
+the "prefix" directory into which you install software you want to hand-
+manage in a modular way, rather than having files sprawled across /usr/local
+
+Typically, I define ${PKGBASE}/PKGDIST and ${PKGBASE}/PKGMETA directories,
+and actually install software into volume specific directories under PKGDIST,
+while segregating config information that I may wish to backup or reuse across
+versions into PKGMETA (via parallel directories and symlinks). Note that
+PKGMETA and PKGDIST are literal directory names, not all caps shell variables
+like PKGDIST. In other words, there might be a hierarchy like:
+
+   ${PKGBASE}/PKGDIST/foosoft-1.1
+   ${PKGBASE}/foosoft --> ${PKGBASE}/PKGDIST/foosoft-1.1
+   ${PKGBASE}/PKGMETA/foosoft-1.1/foo.config
+   ${PKGBASE}/PKGDIST/foosoft-1.1/foo.config -->  ${PKGBASE}/PKGMETA/foosoft-1.1/foo.config
+
+The arrows represent symlinks. Anyway, in .bashrc, then, define
+
+    export PKGBASE=<some absolute directory path>
+    export BASH_FUNCTIONS_BASE=${MCHANGE_ADMIN_ROOT}/common/bash/functions
+    . ${BASH_FUNCTIONS_BASE}/pkg/pkgappend.sh
+
+That's it!
+
+====
+
+Steve Waldman <swaldman@mchange.com>
+04-September-2009
