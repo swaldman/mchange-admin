@@ -9,6 +9,15 @@ source env/appendToCLASSPATH.sh
 # TODO: fix this.
 function addjars()
 {
+
+    # see https://askubuntu.com/questions/590899/how-do-i-check-which-shell-i-am-using#comment2014535_590903
+    RUNNING_SHELL=$(ps -cp "$$" -o command="")
+    
+    if [ $RUNNING_SHELL = "zsh" ]
+    then
+	setopt nullglob
+    fi	
+    
     for f in $1/*.jar; do
         if [ $f != "$1/*.jar" ] # don't add the unmatched literal wildcard
 	then
@@ -22,6 +31,11 @@ function addjars()
           appendToCLASSPATH $f
         fi
     done
+
+    if [ $RUNNING_SHELL = "zsh" ]
+    then
+	unsetopt nullglob
+    fi	
 
     return 0;
 }
