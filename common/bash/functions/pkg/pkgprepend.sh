@@ -4,6 +4,7 @@ source env/prependToPATH.sh
 source env/prependToCLASSPATH.sh
 source env/prependToMANPATH.sh
 source env/prependToLD_LIBRARY_PATH.sh
+source env/prependToDYLD_LIBRARY_PATH.sh
 source java/prependjars.sh
 
 function pkgprepend()
@@ -46,6 +47,7 @@ function pkgprepend()
     then
 	prependjars $libdir
         prependToLD_LIBRARY_PATH "${libdir}"
+        prependToDYLD_LIBRARY_PATH "${libdir}"
     fi
 
     if [ -d "${classesdir}" ]

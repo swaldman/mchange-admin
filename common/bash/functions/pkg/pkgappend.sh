@@ -4,6 +4,7 @@ source env/appendToPATH.sh
 source env/appendToCLASSPATH.sh
 source env/appendToMANPATH.sh
 source env/appendToLD_LIBRARY_PATH.sh
+source env/appendToDYLD_LIBRARY_PATH.sh
 source java/addjars.sh
 
 function pkgappend()
@@ -46,6 +47,7 @@ function pkgappend()
     then
 	addjars $libdir
         appendToLD_LIBRARY_PATH "${libdir}"
+        appendToDYLD_LIBRARY_PATH "${libdir}"
     fi
 
     if [ -d "${classesdir}" ]
